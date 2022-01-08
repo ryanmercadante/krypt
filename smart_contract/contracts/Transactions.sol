@@ -4,7 +4,14 @@ pragma solidity ^0.8.4;
 contract Transactions {
     uint256 transactionCount;
 
-    event Transfer(address from, address receiver, uint256 amount, string message, uint256 timestamp, string keyword);
+    event Transfer(
+        address from,
+        address receiver,
+        uint256 amount,
+        string message,
+        uint256 timestamp,
+        string keyword
+    );
 
     struct TransferStruct {
         address sender;
@@ -24,12 +31,32 @@ contract Transactions {
         string memory _keyword
     ) public {
         transactionCount += 1;
-        transactions.push(TransferStruct(msg.sender, _receiver, _amount, _message, block.timestamp, _keyword));
+        transactions.push(
+            TransferStruct(
+                msg.sender,
+                _receiver,
+                _amount,
+                _message,
+                block.timestamp,
+                _keyword
+            )
+        );
 
-        emit Transfer(msg.sender, _receiver, _amount, _message, block.timestamp, _keyword);
+        emit Transfer(
+            msg.sender,
+            _receiver,
+            _amount,
+            _message,
+            block.timestamp,
+            _keyword
+        );
     }
 
-    function getAllTransactions() public view returns (TransferStruct[] memory) {
+    function getAllTransactions()
+        public
+        view
+        returns (TransferStruct[] memory)
+    {
         return transactions;
     }
 
