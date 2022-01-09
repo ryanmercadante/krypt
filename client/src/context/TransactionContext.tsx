@@ -11,11 +11,11 @@ interface FormData {
 }
 
 interface TransactionContextValues {
-  currentAccount: string
   connectWallet: () => Promise<void>
+  currentAccount: string
   formData: FormData
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  sendTransaction: () => Promise<void>
 }
 
 const TransactionContext = React.createContext<
@@ -32,7 +32,7 @@ const getEthereumContract = () => {
     signer
   )
 
-  console.log({ provider, signer, transactionContract })
+  return transactionContract
 }
 
 const TransactionProvider: React.FC = ({ children }) => {
@@ -43,6 +43,10 @@ const TransactionProvider: React.FC = ({ children }) => {
     keyword: '',
     message: '',
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const [transactionCount, setTransactionCount] = useState(
+    localStorage.getItem('transactionCount')
+  )
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -85,7 +89,37 @@ const TransactionProvider: React.FC = ({ children }) => {
     if (!ethereum) return alert('Please install MetaMask!')
 
     try {
-      // get data from from
+      const { addressTo, amount, keyword, message } = formData
+      const transactionContract = getEthereumContract()
+      const parsedAmount = ethers.utils.parseEther(amount)
+
+      await ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: currentAccount,
+            to: addressTo,
+            gas: '0x5208', // 21_000 GWEI
+            value: parsedAmount._hex,
+          },
+        ],
+      })
+
+      const transactionHash = await transactionContract.addToBlockchain(
+        addressTo,
+        parsedAmount,
+        message,
+        keyword
+      )
+      setIsLoading(true)
+      console.log(`Loading - ${transactionHash.hash}`)
+      await transactionHash.wait()
+
+      setIsLoading(false)
+      console.log(`Success - ${transactionHash.hash}`)
+
+      const count = await transactionContract.getTransactionCount()
+      setTransactionCount(count.toNumber().toString())
     } catch (err) {
       console.error(err)
 
@@ -100,11 +134,11 @@ const TransactionProvider: React.FC = ({ children }) => {
   return (
     <TransactionContext.Provider
       value={{
-        currentAccount,
         connectWallet,
+        currentAccount,
         formData,
-        setFormData,
         handleChange,
+        sendTransaction,
       }}
     >
       {children}

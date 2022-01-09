@@ -36,13 +36,21 @@ const Input = ({
 )
 
 export const Welcome = () => {
-  const { connectWallet, currentAccount, formData, setFormData, handleChange } =
-    useTransactions()
+  const {
+    connectWallet,
+    currentAccount,
+    formData,
+    handleChange,
+    sendTransaction,
+  } = useTransactions()
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     const { addressTo, amount, keyword, message } = formData
+    if (!addressTo || !amount || !keyword || !message) return
+
+    sendTransaction()
   }
 
   return (
