@@ -3,8 +3,8 @@ import { SiEthereum } from 'react-icons/si'
 import { BsInfoCircle } from 'react-icons/bs'
 
 import { Loader } from './'
-import { useContext } from 'react'
-import { TransactionContext } from '../context/TransactionContext'
+import React from 'react'
+import { useTransactions } from '../context/TransactionContext'
 
 const commonStyles =
   'min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white'
@@ -14,7 +14,7 @@ interface InputProps {
   name: string
   type: string
   value: string
-  handleChange: React.ChangeEventHandler<HTMLInputElement>
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input = ({
@@ -30,15 +30,20 @@ const Input = ({
     step='0.001'
     value={value}
     type={type}
-    onChange={(e) => handleChange(e)}
+    onChange={handleChange}
     className='my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism'
   ></input>
 )
 
 export const Welcome = () => {
-  const { connectWallet, currentAccount } = useContext(TransactionContext)
+  const { connectWallet, currentAccount, formData, setFormData, handleChange } =
+    useTransactions()
 
-  const handleSubmit = () => {}
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    const { addressTo, amount, keyword, message } = formData
+  }
 
   return (
     <div className='flex w-full justify-center items-center'>
@@ -101,25 +106,29 @@ export const Welcome = () => {
               placeholder='Address To'
               name='addressTo'
               type='text'
-              handleChange={() => {}}
+              value={formData.addressTo}
+              handleChange={handleChange}
             />
             <Input
               placeholder='Amount (ETH)'
               name='amount'
               type='number'
-              handleChange={() => {}}
+              value={formData.amount}
+              handleChange={handleChange}
             />
             <Input
               placeholder='Keyword (Gif)'
               name='keyword'
               type='text'
-              handleChange={() => {}}
+              value={formData.keyword}
+              handleChange={handleChange}
             />
             <Input
               placeholder='Enter Message'
               name='message'
               type='text'
-              handleChange={() => {}}
+              value={formData.message}
+              handleChange={handleChange}
             />
 
             <div className='h-[1px] w-full bg-gray-400 my-2' />
