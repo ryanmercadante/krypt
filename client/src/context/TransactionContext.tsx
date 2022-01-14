@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { Transactions__factory } from '../../../smart_contract/typechain'
 import { CONTRACT_ADDRESS } from '../utils/constants'
@@ -84,7 +84,6 @@ const TransactionProvider: React.FC = ({ children }) => {
       }))
 
       setTransactions(structuredTransactions)
-      console.log(structuredTransactions)
     } catch (err) {
       console.error(err)
 
