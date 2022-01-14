@@ -32,6 +32,7 @@ const TransactionCard = ({
       sm:min-w-[270px]
       sm:max-w-[3000px]
       flex-col p-3 rounded-md hover:shadow-2xl
+      max-w-[1719px]
     '
     >
       <div className='flex flex-col items-center w-full mt-3'>
@@ -80,8 +81,8 @@ export const Transactions = () => {
   const { currentAccount } = useTransactions()
 
   return (
-    <div className='flex w-full justify-center items-center 2xl:px-20 gradient-bg-transactions'>
-      <div className='flex flex-col md:p-12 py-12 px-4'>
+    <div className='flex w-full justify-center items-center 2xl:px-20 gradient-bg-transactions '>
+      <div className='flex flex-col md:p-12 py-12 px-4 max-w-[1719px]'>
         {currentAccount ? (
           <h3 className='text-white text-3xl text-center my-2'>
             Latest Transactions
