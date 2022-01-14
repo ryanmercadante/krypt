@@ -1,28 +1,16 @@
-import { useTransactions } from '../context/TransactionContext'
+import { Transaction, useTransactions } from '../context/TransactionContext'
 import useFetchGif from '../hooks/useFetchGif'
-import dummyData from '../utils/dummyData'
 import { shortenAddress } from '../utils/helpers'
 
-interface TransactionCardProps {
-  id: number
-  url: string
-  message: string
-  timestamp: string
-  addressFrom: string
-  amount: string
-  addressTo: string
-}
-
 const TransactionCard = ({
-  id,
-  url,
+  addressFrom,
+  addressTo,
+  amount,
+  keyword,
   message,
   timestamp,
-  addressFrom,
-  amount,
-  addressTo,
-}: TransactionCardProps) => {
-  const gifUrl = useFetchGif({ keyword: '' })
+}: Transaction) => {
+  const gifUrl = useFetchGif({ keyword })
 
   return (
     <div
@@ -64,7 +52,7 @@ const TransactionCard = ({
           )}
         </div>
         <img
-          src={gifUrl || url}
+          src={gifUrl}
           alt='gif'
           className='w-full h-64 2xl:h-96 rounded-md shadow-lg object-cover'
         />
@@ -78,7 +66,7 @@ const TransactionCard = ({
 }
 
 export const Transactions = () => {
-  const { currentAccount } = useTransactions()
+  const { currentAccount, transactions } = useTransactions()
 
   return (
     <div className='flex w-full justify-center items-center 2xl:px-20 gradient-bg-transactions '>
@@ -94,8 +82,8 @@ export const Transactions = () => {
         )}
 
         <div className='flex flex-wrap justify-center items-center mt-10'>
-          {dummyData.reverse().map((transaction, index) => (
-            <TransactionCard key={transaction.id} {...transaction} />
+          {transactions.reverse().map((transaction, index) => (
+            <TransactionCard key={transaction.timestamp} {...transaction} />
           ))}
         </div>
       </div>
