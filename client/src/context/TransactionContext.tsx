@@ -24,7 +24,9 @@ interface TransactionContextValues {
   currentAccount: string
   formData: FormData
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  isLoading: boolean
   sendTransaction: () => Promise<void>
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>
   transactions: Transaction[]
 }
 
@@ -189,7 +191,9 @@ const TransactionProvider: React.FC = ({ children }) => {
         currentAccount,
         formData,
         handleChange,
+        isLoading,
         sendTransaction,
+        setFormData,
         transactions,
       }}
     >

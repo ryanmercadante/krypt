@@ -42,7 +42,9 @@ export const Welcome = () => {
     currentAccount,
     formData,
     handleChange,
+    isLoading,
     sendTransaction,
+    setFormData,
   } = useTransactions()
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,6 +54,7 @@ export const Welcome = () => {
     if (!addressTo || !amount || !keyword || !message) return
 
     sendTransaction()
+    setFormData({ addressTo: '', amount: '', keyword: '', message: '' })
   }
 
   return (
@@ -144,7 +147,7 @@ export const Welcome = () => {
 
             <div className='h-[1px] w-full bg-gray-400 my-2' />
 
-            {false ? (
+            {isLoading ? (
               <Loader />
             ) : (
               <button
