@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prettier:solidity": "./node_modules/.bin/prettier --write contracts/**/*.sol"
+    "prettier:solidity": "./node_modules/.bin/prettier --write contracts/**/*.sol",
+    "typechain": "./node_modules/.bin/typechain --target ethers-v5 --out-dir ./typechain"
   },
   "keywords": [],
   "author": "",
