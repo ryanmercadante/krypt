@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv'
 
 import { HardhatUserConfig, task } from 'hardhat/config'
 import '@nomiclabs/hardhat-etherscan'
+import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
 import '@typechain/hardhat'
 import 'hardhat-gas-reporter'
@@ -34,12 +35,12 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
-  typechain: {
-    outDir: './typechain',
-    target: 'ethers-v5',
-    alwaysGenerateOverloads: false,
-    externalArtifacts: ['externicalArtifacts/*.json'],
-  },
+  // typechain: {
+  //   outDir: 'typechain',
+  //   target: 'ethers-v5',
+  //   alwaysGenerateOverloads: false,
+  //   externalArtifacts: ['externalArtifacts/*.json'],
+  // },
 }
 
 export default config
