@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import { Transactions__factory } from '../../smart-contract/typechain'
+import { Transactions__factory } from '../../smart-contract/typechain-types/'
 import { CONTRACT_ADDRESS } from '../utils/constants'
 
 interface FormData {
