@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Footer, Navbar, Services, Transactions, Welcome } from './components'
+import { Footer, Navbar, Services, Transactions, Welcome } from '../components'
 
 const Home: NextPage = () => {
   return (
